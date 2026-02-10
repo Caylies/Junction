@@ -6,6 +6,7 @@
 </a>
 
 # Junction
+
 **Junction** is a Luau package that manages functions between events under a single shared connection.
 
 <br>
@@ -20,11 +21,13 @@ Junction puts them into a single pool, reducing overhead and improving organizat
 <br>
 
 ## Documentation
+
 </div>
 
 `Junction.GetPool(Event) → Pool`
 
 Returns a connection pool for the given event. If no pool exists, one will be created automatically.
+
 - **Event** `RBXScriptSignal` - The event associated with the connection pool.
 
 <br>
@@ -32,6 +35,7 @@ Returns a connection pool for the given event. If no pool exists, one will be cr
 `Pool:Mount(Name, Function)`
 
 Binds a function to the pool.
+
 - **Name** `string` - Identifier used for unmounting.
 - **Function** `(...any) -> ()` - Function invoked when the event fires.
 
@@ -40,6 +44,7 @@ Binds a function to the pool.
 `Pool:Unmount(Name)`
 
 Unbinds a function from the pool. If no functions remain, the connection is temporarily disconnected until one is added again.
+
 - **Name** `string` - Identifier of the function to unbind.
 
 <br>
@@ -47,6 +52,7 @@ Unbinds a function from the pool. If no functions remain, the connection is temp
 `Pool:BulkUnmount(Predicate)`
 
 Unbinds multiple functions based on a predicate.
+
 - **Predicate** `(Name: string) -> boolean` - Return `true` to unmount the function.
 
 <br>
