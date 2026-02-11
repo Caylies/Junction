@@ -2,7 +2,7 @@
 
 <div align="center">
 <a href="https://github.com/Caylies/Junction">
- <img width="125" src="assets/logo.png" alt="Junction logo" />
+ <img width="125" src="assets/logo.png" alt="Junction logo"/>
 </a>
 
 # Junction

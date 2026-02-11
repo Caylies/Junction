@@ -1,5 +1,10 @@
 --!strict
 
+--[[
+	Handles connection pool logic.
+
+	@class Pool
+]]
 local Pool = {}
 Pool.__index = Pool
 
@@ -42,6 +47,12 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
+--[[
+	Binds a function to the pool.
+	
+	@param Name string -- Identifier used for unmounting.
+	@param Function (...any) -> () -- Function invoked when the event fires.
+]]
 function Pool.Mount(self: Pool, Name: string, Function: (...any) -> ())
 	self.Functions[Name] = Function
 
@@ -51,6 +62,12 @@ function Pool.Mount(self: Pool, Name: string, Function: (...any) -> ())
 	end
 end
 
+--[[
+	Unbinds a function from the pool.
+	If no functions remain, the connection is temporarily disconnected until one is added again.
+	
+	@param Name string -- Identifier of the function to unbind.
+]]
 function Pool.Unmount(self: Pool, Name: string)
 	self.Functions[Name] = nil
 
@@ -60,6 +77,11 @@ function Pool.Unmount(self: Pool, Name: string)
 	end
 end
 
+--[[
+	Unbinds multiple functions based on a predicate.
+	
+	@param Predicate (Name: string) -> boolean -- Return `true` to unmount the function.
+]]
 function Pool.BulkUnmount(self: Pool, Predicate: (Name: string) -> boolean)
 	for Name, _ in self.Functions do
 		if not Predicate(Name) then
@@ -70,6 +92,9 @@ function Pool.BulkUnmount(self: Pool, Predicate: (Name: string) -> boolean)
 	end
 end
 
+--[[
+	Disconnects the pool's connection.
+]]
 function Pool.Destroy(self: Pool)
 	if self.Connection then
 		self.Connection:Disconnect()
